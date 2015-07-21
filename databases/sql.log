@@ -1,0 +1,170 @@
+timestamp: 2015-05-05T19:38:04.193107
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512),
+    sex CHAR(512) NOT NULL,
+    phone CHAR(512),
+    address CHAR(512),
+    birth_date DATE,
+    Category CHAR(512),
+    patient CHAR(1),
+    doctor CHAR(1),
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2015-05-05T19:38:04.330792
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2015-05-05T19:38:04.478003
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2015-05-05T19:38:04.600088
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2015-05-05T19:38:04.722853
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2015-05-05T19:38:04.868163
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2015-05-05T19:38:05.002500
+CREATE TABLE patient(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    UPID INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    bloodgroup CHAR(3),
+    allergies TEXT,
+    surgeries TEXT,
+    diseases CHAR(512)
+);
+success!
+timestamp: 2015-05-05T19:38:05.159191
+CREATE TABLE doctor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    UDID INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    Qualifications CHAR(512),
+    visiting_days CHAR(512),
+    visiting_hours CHAR(512),
+    image CHAR(512)
+);
+success!
+timestamp: 2015-05-05T19:38:05.318568
+CREATE TABLE staff(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    USID INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    Designation CHAR(512),
+    Qualifications CHAR(512),
+    Experience CHAR(512),
+    Salary CHAR(512)
+);
+success!
+timestamp: 2015-05-05T19:38:05.463547
+CREATE TABLE MedicalReports(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    UPID INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    UDID INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    dated DATE,
+    ChiefComplaint CHAR(512),
+    CaseHistory CHAR(512),
+    ClinicalFinding CHAR(512),
+    InvestigationsAdvised CHAR(512),
+    Treatment CHAR(512),
+    Prescription CHAR(512),
+    FollowUpDetails CHAR(512)
+);
+success!
+timestamp: 2015-05-05T19:38:05.620306
+CREATE TABLE appointment(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    UPID INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    UDID INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    dated DATE,
+    patient_request_time CHAR(512),
+    Status CHAR(512),
+    Slot_doctor_confirm CHAR(512),
+    symptoms TEXT
+);
+success!
+timestamp: 2015-05-05T19:38:05.743255
+CREATE TABLE Stock(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    USID INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    Name CHAR(512),
+    Dose CHAR(512),
+    Salts CHAR(512),
+    MedicineUse TEXT,
+    Quantity INTEGER,
+    ExpiryDate DATE
+);
+success!
+timestamp: 2015-05-05T19:38:05.866502
+CREATE TABLE EquipmentsChemicals(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    UDID INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    Name CHAR(128),
+    EquipmentUsage TEXT,
+    Quantity INTEGER,
+    Supplier CHAR(512)
+);
+success!
+timestamp: 2015-05-05T19:38:05.990680
+CREATE TABLE Feedback(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    UPID INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    environment CHAR(512),
+    ward_facilities CHAR(512),
+    doctors_services CHAR(512)
+);
+success!

@@ -1,0 +1,5 @@
+{{extend 'layout_report.html'}}
+
+<br/>
+
+{{=grid}}

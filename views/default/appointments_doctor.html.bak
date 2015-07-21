@@ -1,0 +1,43 @@
+{{extend 'layout_appointments_doctor.html'}}
+
+{{=grid}}
+
+
+{{response.files.append(URL(r=request,c='static',f='js/ui.core.js'))}}
+{{response.files.append(URL(r=request,c='static',f='js/ui.draggable.js'))}}
+{{response.files.append(URL(r=request,c='static',f='js/ui.resizable.js'))}}
+{{response.files.append(URL(r=request,c='static',f='js/fullcalendar.min.js'))}}
+{{response.files.append(URL(r=request,c='static',f='css/fullcalendar.css'))}}
+
+
+<h1>My calendar</h1>
+
+<script type='text/javascript'>
+  jQuery(document).ready(function() {
+
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+
+        $('#calendar').fullCalendar({
+            editable: false,
+            events: [
+            {{for i,row in enumerate(rows):}}{{if i!=0:}},{{pass}}
+                {
+                   
+                    allDay: false,
+                    start: new Date('{{=row.f_start_time.strftime('%B %d, %Y %H:%M:%S')}}'),
+                    end: new Date('{{=row.f_end_time.strftime('%B %d, %Y %H:%M:%S')}}'),
+                  
+                }
+            {{pass}}
+            ]
+        });
+
+    });
+</script>
+<h3>
+    hello
+</h3>
+<div id='calendar'></div>

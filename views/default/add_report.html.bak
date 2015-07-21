@@ -1,0 +1,11 @@
+{{extend 'layout_user.html'}}
+{{include 'content_add.html'}}
+{{=DIV(menu)}}
+
+{{=DIV(H1(title))}}
+
+{{=DIV(form1)}}
+
+{{=DIV(form2)}}
+
+{{=DIV(form3)}}
